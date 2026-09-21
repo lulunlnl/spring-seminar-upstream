@@ -9,11 +9,11 @@ data class MeetingUpdateRequest(
     // "(?s).*\S.*"는 공백이 아닌 문자를 하나 이상 포함해야 한다는 의미입니다.
     @field:Pattern(
         regexp = "(?s).*\\S.*",
-        message = "모임 제목은 비어 있을 수 없습니다.",
+        message = "모임의 제목은 비어 있을 수 없습니다.",
     )
     val title: String? = null,
 
     // @Positive 역시 null은 검증하지 않고 통과시킵니다.
-    @field:Positive(message = "모임 정원은 1명 이상이어야 합니다.")
+    @field:Positive(message = "모임의 정원은 1명 이상이어야 합니다.")
     val capacity: Int? = null,
 )
