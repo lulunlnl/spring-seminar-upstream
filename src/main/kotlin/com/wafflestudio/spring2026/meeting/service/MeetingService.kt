@@ -18,7 +18,31 @@ class MeetingService(
             capacity = capacity,
         )
 
+    fun getMeetings(): List<Meeting> = meetingRepository.findAll()
+
     fun getMeeting(id: Long): Meeting =
         meetingRepository.findById(id)
             ?: throw MeetingNotFoundException(id)
+
+    fun updateMeeting(
+        id: Long,
+        title: String?,
+        capacity: Int?,
+    ): Meeting {
+        val meeting = getMeeting(id)
+
+        // 전달되지 않은(null) 프로퍼티는 기존 값을 그대로 유지합니다. id도 변하지 않습니다.
+        return meetingRepository.update(
+            meeting.copy(
+                title = title ?: meeting.title,
+                capacity = capacity ?: meeting.capacity,
+            ),
+        )
+    }
+
+    fun deleteMeeting(id: Long) {
+        if (!meetingRepository.deleteById(id)) {
+            throw MeetingNotFoundException(id)
+        }
+    }
 }
